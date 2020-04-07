@@ -5,7 +5,8 @@ const colors = require('colors');
 const error = require('./middleware/error');
 const connectDB = require('./config/db');
 
-const bootcamp = require('./routes/bootcamps')
+const bootcamp = require('./routes/bootcamps');
+const course = require('./routes/courses');
 
 dotenv.config({path: 'config/config.env'});
 
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/v1/bootcamps', bootcamp);
+app.use('/api/v1/courses', course);
 
 app.use(error);
 
