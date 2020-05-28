@@ -9,6 +9,7 @@ const connectDB = require('./config/db');
 
 const bootcamp = require('./routes/bootcamps');
 const course = require('./routes/courses');
+const auth = require('./routes/auth');
 
 dotenv.config({path: 'config/config.env'});
 
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/bootcamps', bootcamp);
 app.use('/api/v1/courses', course);
+app.use('/api/v1/auth', auth);
 
 app.use(error);
 
