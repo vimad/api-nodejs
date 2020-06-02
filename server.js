@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
@@ -19,6 +20,9 @@ const app = express();
 
 // parse body
 app.use(express.json());
+
+// cookie parser
+app.use(cookieParser());
 
 // Add a logger middleware for requests
 if (process.env.NODE_ENV === 'development') {
