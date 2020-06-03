@@ -27,6 +27,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 // @route    POST /api/v1/bootcamps
 // @access   Private
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
+    req.body.user = req.user.id;
     const bootCamp = await BootCamp.create(req.body);
     res.status(200).json({success: true, data: bootCamp});
 });

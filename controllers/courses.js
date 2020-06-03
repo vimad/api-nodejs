@@ -45,6 +45,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
         next(new ErrorResponse(`can not find bootcamp with id ${req.params.id}`), 404)
     }
 
+    req.body.user = req.user.id;
     const course = await Course.create(req.body);
 
     res.status(200).json({success: true, data: course});

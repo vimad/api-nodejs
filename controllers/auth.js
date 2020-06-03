@@ -42,6 +42,37 @@ exports.login = asyncHandler(async (req, res, next) => {
     sendTokenResponce(user, 200, res);
 });
 
+// @dec      Get logged in user
+// @route    GET /api/v1/auth/me
+// @access   private
+exports.getMe = asyncHandler(async (req, res, next) => {
+   const user = req.user;
+
+   res.status(200).json({
+       success: true,
+       data: user
+   });
+});
+
+// @dec      Reset token generation
+// @route    GET /api/v1/forgotpassword
+// @access   private
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+    const user = await User.findOne({email: req.body.email});
+
+    if (!user) {
+        return next(new ErrorResponse(`No user with the email`, 404));
+    }
+
+    const resetToken = user.getResetPasswordToken();
+
+    res.status(200).json({
+        success: true,
+        data: user
+    });
+});
+
+
 const sendTokenResponce = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
 
@@ -58,16 +89,4 @@ const sendTokenResponce = (user, statusCode, res) => {
         .cookie('token', token, options)
         .json({success: true, token});
 };
-
-// @dec      Get logged in user
-// @route    GET /api/v1/auth/me
-// @access   private
-exports.getMe = asyncHandler(async (req, res, next) => {
-   const user = req.user;
-
-   res.status(200).json({
-       success: true,
-       data: user
-   });
-});
 
